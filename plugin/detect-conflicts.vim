@@ -18,8 +18,10 @@ if !has('python')
     finish
 endif
 
+let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h') . '/detect-conflicts.py'
+
 function! DetectConflicts()
-    pyfile detect-conflicts.py
+    execute 'pyfile ' . s:path
 endfunc
 
 command! CheckMapping call DetectConflicts()
