@@ -95,7 +95,7 @@ endfunc
 """ Main function!
 " Checks if a conflict exists for a given mode
 function! s:DetectConflicts(list)
-    let mappings = ListToDict(list)
+    let mappings = s:ListToDict(list)
     let conflicts = {}
     for mmode in keys(mappings)
         for mapping in mappings[mmode]
@@ -116,10 +116,10 @@ endfunc
 
 " Real main function! - get lists of mappings and look for conflicts
 function! s:Main()
-    let map_mappings = GetMap()
+    let map_mappings = s:GetMap()
     call s:DetectConflicts(map_mappings)
 
-    let map_excl_mappings = GetMap()
+    let map_excl_mappings = s:GetMapExcl()
     call s:DetectConflicts(map_excl_mappings)
 endfunc
 
