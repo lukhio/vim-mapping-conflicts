@@ -35,9 +35,23 @@ let g:ConflictChecker = 1
 function! s:ListToDict(list)
     let dict = {}
     for entry in a:list
-        let splitted = split(a:list)
+        let splitted = split(entry, '  ')
         let dict[splitted[0]] = {}
-        dict[splitted[0]][splitted[1]] += [splitted[2]]
+
+        " Create list if if does not already exists
+        if get(dict[splitted[0]], "NONE") == "NONE"
+            let dict[splitted[0]][splitted[1]] = []
+        endif
+
+        " We need to remove all the garbage (e.g. whitespaces)
+        let value = ""
+        for item in splitted[2:]
+            if item !~ '\s*'
+                value .= item
+            endif
+        endfor
+
+        let dict[splitted[0]][splitted[1]] += [value]
     endfor
     return dict
 endfunc
@@ -98,10 +112,11 @@ function! s:DetectConflicts(list)
     let mappings = s:ListToDict(a:list)
     let conflicts = {}
     for mmode in keys(mappings)
-        for mapping in mappings[mmode]
+        for mapping in keys(mappings[mmode])
             if len(mappings[mmode][mapping]) > 1
                 let conflicts[mapping] = mappings[mmode][mapping]
             endif
+        endfor
     endfor
 
     let nb_conflicts = len(keys(conflicts))
