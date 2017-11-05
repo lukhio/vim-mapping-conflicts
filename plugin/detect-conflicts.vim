@@ -19,7 +19,7 @@
 " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 " SOFTWARE.
 
-""" Mapping getters
+""" Mappings getters
 " Returns all mappings that work in normal, visual and select and operator
 " pending mode
 function! GetMap()
