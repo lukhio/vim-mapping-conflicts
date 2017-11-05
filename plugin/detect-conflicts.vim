@@ -19,6 +19,23 @@
 " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 " SOFTWARE.
 
+" Convert a list to dictionary. The list entries are of the following form:
+"
+"   mode | key-map | key-sequence
+"
+" The resulting dictionary uses the mode as key. Each value is also a
+" dictionnary, with the key-map as key. The values of this dictionary are a
+" list of the key sequences.
+function s:ListToDict(list)
+    let dict = {}
+    for entry in l
+        let splitted = split(list)
+        let dict[splitted[0]] = {}
+        dict[splitted[0]][splitted[1]] += [splitted[2]]
+    endfor
+    return dict
+endfunc
+
 """ Mappings getters
 " Returns all mappings that work in normal, visual and select and operator
 " pending mode
