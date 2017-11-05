@@ -121,8 +121,8 @@ function! s:DetectConflicts(list)
 
     let nb_conflicts = len(keys(conflicts))
     if nb_conflicts > 0
-        echom nb_conflicts . " conflicts detected. "
-        echom "Check the conflicts.log file for details."
+        echoe nb_conflicts . " conflicts detected. Check the conflicts.log \
+            file for details."
         call s:DumpToFile(conflicts)
     else
         echom "No conflict detected."
@@ -132,10 +132,10 @@ endfunc
 " Real main function! - get lists of mappings and look for conflicts
 function! s:Main()
     let map_mappings = s:GetMap()
-    call s:DetectConflicts(map_mappings)
-
     let map_excl_mappings = s:GetMapExcl()
-    call s:DetectConflicts(map_excl_mappings)
+    let mappings = map_mappings + map_excl_mappings
+
+    call s:DetectConflicts(mappings)
 endfunc
 
 command! CheckMappingConflicts call s:Main()
