@@ -38,7 +38,7 @@ function s:ListToDict(list)
 endfunc
 
 " Dumps the list of existing conflicts to a file for further analysis.
-function s:DictToFile(dict)
+function s:DumpToFile(dict)
     redir >> "./conflicts.log"
     for mmode in keys(dict)
         if mmode ==? "n"
@@ -103,7 +103,7 @@ function s:DetectConflicts(list)
     if nb_conflicts > 0
         echom nb_conflicts . " conflicts detected. "
         echom "Check the conflicts.log file for details."
-        return conflicts
+        DumpToFile(conflicts)
     else
         echom "No conflict detected."
     endif
