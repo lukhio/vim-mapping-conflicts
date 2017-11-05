@@ -37,6 +37,36 @@ function s:ListToDict(list)
     return dict
 endfunc
 
+" Dumps the list of existing conflicts to a file for further analysis.
+function s:DictToFile(dict)
+    redir >> "./conflicts.log"
+    for mmode in keys(dict)
+        if mmode ==? "n"
+            echom "Normal mode mappings:"
+        elseif mmode ==? "i"
+            echom "Insert mode mappings:"
+        elseif mmode ==? "v"
+            echom "Visual and select  mode mappings:"
+        elseif mmode ==? "s"
+            echom "Select mode mappings:"
+        elseif mmode ==? "x"
+            echom "Visual mode mappings:"
+        elseif mmode ==? "c"
+            echom "Command-line mode mappings:"
+        elseif mmode ==? "o"
+            echom "Operator pending mappings:"
+        endif
+
+        for mapping in dict[mmode]
+            echom "    " . mapping . " - can mean:"
+            for sequence in dict[mmode][mapping]
+                echom "\t" . sequence
+            endfor
+        endfor
+    endfor
+    redir END
+endfunc
+
 """ Mappings getters
 " Returns all mappings that work in normal, visual and select and operator
 " pending mode
