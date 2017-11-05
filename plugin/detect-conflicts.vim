@@ -19,6 +19,7 @@
 " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 " SOFTWARE.
 
+""" Utilities
 " Convert a list to dictionary. The list entries are of the following form:
 "
 "   mode | key-map | key-sequence
@@ -54,6 +55,28 @@ function s:GetMapExcl()
     redir END
     let map_excl_mappings = split(@a, '\n')
     return map_excl_mappings
+endfunc
+
+""" Main function
+" Checks if a conflict exists for a given mode
+function s:DetectConflicts(list)
+    let mappings = ListToDict(list)
+    let conflicts = {}
+    for mmode in keys(mappings)
+        for mapping in mappings[mmode]
+            if len(mappings[mmode][mapping]) > 1
+                let conflicts[mapping] = mappings[mmode][mapping]
+            endif
+    endfor
+
+    let nb_conflicts = len(keys(conflicts))
+    if nb_conflicts > 0
+        echom nb_conflicts . " conflicts detected. "
+        echom "Check the conflicts.log file for details."
+        return conflicts
+    else
+        echom "No conflict detected."
+    endif
 endfunc
 
 " command! CheckMapping call DetectConflicts()
