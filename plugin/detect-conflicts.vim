@@ -14,14 +14,7 @@
 " You should have received a copy of the GNU General Public License
 " along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-if !has('python')
-    finish
-endif
 
-let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h') . '/detect-conflicts.py'
-
-function! DetectConflicts()
-    execute 'pyfile ' . s:path
 endfunc
 
-command! CheckMapping call DetectConflicts()
+" command! CheckMapping call DetectConflicts()
