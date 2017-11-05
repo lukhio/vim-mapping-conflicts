@@ -34,8 +34,8 @@ let g:ConflictChecker = 1
 " list of the key sequences.
 function! s:ListToDict(list)
     let dict = {}
-    for entry in l
-        let splitted = split(list)
+    for entry in a:list
+        let splitted = split(a:list)
         let dict[splitted[0]] = {}
         dict[splitted[0]][splitted[1]] += [splitted[2]]
     endfor
@@ -45,7 +45,7 @@ endfunc
 " Dumps the list of existing conflicts to a file for further analysis.
 function! s:DumpToFile(dict)
     redir >> "./conflicts.log"
-    for mmode in keys(dict)
+    for mmode in keys(a:dict)
         if mmode ==? "n"
             echom "Normal mode mappings:"
         elseif mmode ==? "i"
@@ -62,9 +62,9 @@ function! s:DumpToFile(dict)
             echom "Operator pending mappings:"
         endif
 
-        for mapping in dict[mmode]
+        for mapping in a:dict[mmode]
             echom "    " . mapping . " - can mean:"
-            for sequence in dict[mmode][mapping]
+            for sequence in a:dict[mmode][mapping]
                 echom "\t" . sequence
             endfor
         endfor
@@ -95,7 +95,7 @@ endfunc
 """ Main function!
 " Checks if a conflict exists for a given mode
 function! s:DetectConflicts(list)
-    let mappings = s:ListToDict(list)
+    let mappings = s:ListToDict(a:list)
     let conflicts = {}
     for mmode in keys(mappings)
         for mapping in mappings[mmode]
