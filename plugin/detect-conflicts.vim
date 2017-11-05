@@ -22,7 +22,7 @@
 """ Mappings getters
 " Returns all mappings that work in normal, visual and select and operator
 " pending mode
-function! GetMap()
+function s:GetMap()
     redir @a
     silent map
     redir END
@@ -31,7 +31,7 @@ function! GetMap()
 endfunc
 
 " Returns all mappings that work in insert and command-line mode
-function! GetMapExcl()
+function s:GetMapExcl()
     redir @a
     silent map!
     redir END
