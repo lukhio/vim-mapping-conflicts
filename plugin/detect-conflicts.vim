@@ -118,4 +118,4 @@ function s:Main()
     DetectConflicts(map_excl_mappings)
 endfunc
 
-command! CheckMappingConflicts call Main()
+command! CheckMappingConflicts call s:Main()
