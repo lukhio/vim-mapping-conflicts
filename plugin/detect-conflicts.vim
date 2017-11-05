@@ -19,6 +19,11 @@
 " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 " SOFTWARE.
 
+if exists('g:ConflictChecker')
+  finish
+endif
+let g:ConflictChecker = 1
+
 """ Utilities
 " Convert a list to dictionary. The list entries are of the following form:
 "
@@ -27,7 +32,7 @@
 " The resulting dictionary uses the mode as key. Each value is also a
 " dictionnary, with the key-map as key. The values of this dictionary are a
 " list of the key sequences.
-function s:ListToDict(list)
+function! s:ListToDict(list)
     let dict = {}
     for entry in l
         let splitted = split(list)
@@ -38,7 +43,7 @@ function s:ListToDict(list)
 endfunc
 
 " Dumps the list of existing conflicts to a file for further analysis.
-function s:DumpToFile(dict)
+function! s:DumpToFile(dict)
     redir >> "./conflicts.log"
     for mmode in keys(dict)
         if mmode ==? "n"
@@ -70,7 +75,7 @@ endfunc
 """ Mappings getters
 " Returns all mappings that work in normal, visual and select and operator
 " pending mode
-function s:GetMap()
+function! s:GetMap()
     redir @a
     silent map
     redir END
@@ -79,7 +84,7 @@ function s:GetMap()
 endfunc
 
 " Returns all mappings that work in insert and command-line mode
-function s:GetMapExcl()
+function! s:GetMapExcl()
     redir @a
     silent map!
     redir END
@@ -87,9 +92,9 @@ function s:GetMapExcl()
     return map_excl_mappings
 endfunc
 
-""" Main function
+""" Main function!
 " Checks if a conflict exists for a given mode
-function s:DetectConflicts(list)
+function! s:DetectConflicts(list)
     let mappings = ListToDict(list)
     let conflicts = {}
     for mmode in keys(mappings)
@@ -103,19 +108,19 @@ function s:DetectConflicts(list)
     if nb_conflicts > 0
         echom nb_conflicts . " conflicts detected. "
         echom "Check the conflicts.log file for details."
-        DumpToFile(conflicts)
+        call s:DumpToFile(conflicts)
     else
         echom "No conflict detected."
     endif
 endfunc
 
-" Real main function - get lists of mappings and look for conflicts
-function s:Main()
+" Real main function! - get lists of mappings and look for conflicts
+function! s:Main()
     let map_mappings = GetMap()
-    DetectConflicts(map_mappings)
+    call s:DetectConflicts(map_mappings)
 
     let map_excl_mappings = GetMap()
-    DetectConflicts(map_excl_mappings)
+    call s:DetectConflicts(map_excl_mappings)
 endfunc
 
 command! CheckMappingConflicts call s:Main()
