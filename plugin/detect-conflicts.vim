@@ -109,4 +109,13 @@ function s:DetectConflicts(list)
     endif
 endfunc
 
-" command! CheckMapping call DetectConflicts()
+" Real main function - get lists of mappings and look for conflicts
+function s:Main()
+    let map_mappings = GetMap()
+    DetectConflicts(map_mappings)
+
+    let map_excl_mappings = GetMap()
+    DetectConflicts(map_excl_mappings)
+endfunc
+
+command! CheckMappingConflicts call Main()
