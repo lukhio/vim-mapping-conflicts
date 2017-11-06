@@ -19,6 +19,16 @@
 " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 " SOFTWARE.
 
+"==============================================================================
+" Plugin: mapping-conflicts
+" Maintainer: Julien Gamba <julien@jgamba.eu>
+" URL: https://git.jgamba.eu/cgit.cgi/vim-mapping-conflicts/
+" Version: 0.1
+"
+" A small plugin to look for conflicts between mapped key sequences in you vim
+" configuration.
+"==============================================================================
+
 if exists('g:ConflictChecker')
   finish
 endif
