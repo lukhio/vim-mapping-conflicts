@@ -1,0 +1,44 @@
+*mapping-conflicts.txt*   Detect mapping conflicts in your Vim configuration.
+*mapping-conflicts*
+
+=============================================================================
+CONTENTS                                           *MappingConflictsContents*
+
+    1. Intro ................................. |MappingConflictsIntro|
+    2. Usage ................................. |MappingConflictsUsage|
+    3. License ............................... |MappingConflictsLicense|
+    4. Contributing .......................... |MappingConflictsContributing|
+
+=============================================================================
+INTRO                                                 *MappingConflictsIntro*
+
+vim-mapping-conflicts is a small plugin to detect the existing conflicts in
+the key mappings of your vim configuration. It is especially useful if you use
+a lot of plugin, each with a lot of different key-sequences that can be mapped
+to the same key. This plugin will merely report the conflicts, it is up to you
+to resolve them by updating you configuration.
+
+=============================================================================
+USAGE                                                 *MappingConflictsUsage*
+
+This plugin provides only one command:
+
+    :CheckMappingConflicts
+
+This command will either echo a message saying that there is no conflict, or
+list the existing conflicts in a conflicts.log file that will be created in
+the directory from where you are running vim.
+
+=============================================================================
+LICENSE                                             *MappingConflictsLicense*
+
+This plugin is released under the MIT license. A copy of the license is
+present in the LICENSE file.
+
+=============================================================================
+CONTRIBUTING                                   *MappingConflictsContributing*
+
+Patches can be sent at julien AT jgamba DOT eu. Any other kind of feedback is
+welcome.
+
+vim: tw=78
